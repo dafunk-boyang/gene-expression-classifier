@@ -5,5 +5,5 @@ plotly
 seaborn
 umap-learn
 shap
-geoparser
+geoparse
 statsmodels
