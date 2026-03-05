@@ -28,7 +28,7 @@ def download_geo(gse_id: str, out_dir= "../data"):
                 info[k] = v[0]
         # Often phenotype sits in characteristics_ch1 (or similar)
         ch = gsm.metadata.get("characteristics_ch1", [])
-        for i, line, in enumerate (ch):
+        for i, line in enumerate(ch):
             key_val = line.split(":")
             if len(key_val) == 2:
                 info[f"char{i}+{key_val[0].strip()}"] = key_val[1].strip()
