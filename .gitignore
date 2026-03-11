@@ -11,7 +11,8 @@ venv/
 env/
 
 # Data files (too large for git; use DVC or document separately)
-data/
+data/*
+!data/.gitkeep
 *.csv
 *.soft.gz
 *.gz
@@ -19,7 +20,8 @@ data/
 *.hdf5
 
 # Figures (generated outputs)
-figures/
+figures/*
+!figures/.gitkeep
 
 # Jupyter
 .ipynb_checkpoints/
