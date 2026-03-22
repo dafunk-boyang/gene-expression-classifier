@@ -44,8 +44,8 @@ Raw GEO data
 
 | Model | CV Accuracy (mean ± std) | Test Accuracy |
 |---|---|---|
-| Logistic Regression | see notebook | see notebook |
-| Random Forest | see notebook | see notebook |
+| Logistic Regression | 0.913 ± 0.083 | 1.00 |
+| Random Forest | 0.913 ± 0.083 | 0.94 |
 
 > Run `02_train.ipynb` to reproduce results. Figures are saved to `figures/`.
 
