@@ -37,15 +37,30 @@ Raw GEO data
 2. **Preprocessing** — samples with mismatched metadata are dropped; top 2,000 most variable probes are selected; labels are mapped from free-text characteristics to binary integers.
 3. **Train/test split** — stratified 80/20 split; `StandardScaler` is fit exclusively on the training set to prevent data leakage.
 4. **Models** — Logistic Regression (L2) and Random Forest (200 trees), each evaluated with 5-fold stratified cross-validation on the training set and a held-out test set.
-
+5. **Feature importance** — MDI (mean decrease in impurity) used to identify the top 20 most discriminative probe sets driving subtype classification.
 ---
 
 ## Results
 
 | Model | CV Accuracy (mean ± std) | Test Accuracy |
 |---|---|---|
-| Logistic Regression | 0.913 ± 0.083 | 1.00 |
-| Random Forest | 0.913 ± 0.083 | 0.94 |
+|Logistic Regression|0.913 ± 0.083|1.00 (12/12)|
+|Random Forest|0.913 ± 0.083|0.92 (11/12)|
+
+Both models achieved strong classification performance. Logistic Regression produced perfect test set accuracy; the Random Forest misclassified one SCC sample as adenocarcinoma (precision 1.00, recall 0.75 for SCC). The close agreement between CV and test accuracy suggests neither model is overfitting to the training data.
+
+The identical CV scores across both models reflect that both a linear and an ensemble approach find the same decision boundary with comparable difficulty — consistent with strong class separation in the top 2,000 variance-selected genes, a biologically plausible finding given the known transcriptional differences between AC and SCC.
+
+**Limitations:** The test set contains only 12 samples (8 AC, 4 SCC). A single misclassification produces a 25% drop in SCC recall, so performance metrics should be interpreted as proof-of-concept rather than clinically validated estimates. Permutation importance was explored but produced near-zero values across all features — a known limitation of this method on very small test sets, where single-feature shuffling rarely shifts confident predictions across the decision boundary. MDI importance is reported instead, with the caveat that it reflects training-set feature usage and may overstate the contribution of high-variance probes.
+
+\---
+
+## Feature Importance
+
+Top 20 probe sets by MDI importance are visualised in `figures/feature\_importance\_mdi.png`. Probe set IDs correspond to the Affymetrix GPL570 platform and can be mapped to gene symbols via Bioconductor's `hgu133plus2.db` annotation package for biological interpretation.
+
+\---
+
 
 > Run `02_train.ipynb` to reproduce results. Figures are saved to `figures/`.
 
